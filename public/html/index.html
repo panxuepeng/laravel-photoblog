@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图片博客</title>
+<script>
+var _Timestamp={begin: +new Date(), log: function(name){this[name] = + new Date() - this.begin}};
+</script>
+<link rel="stylesheet" href="assets/bootstrap/3.1.1/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="assets/css/main.css"/>
+<link rel="stylesheet" href="assets/bootstrap/3.1.1/css/bootstrap-responsive.min.css"/>
+<!--[if IE 6]>
+  <link href="assets/ie6/ie6.min.css" rel="stylesheet"/>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="assets/html5/html5.js"></script>
+<![endif]-->
+</head>
+
+<body>
+<script>_Timestamp.log('beginBody');</script>
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</a>
+		<a class="brand">看自然</a>
+		<div class="nav-collapse">
+			<ul class="nav" id="photo-tags">
+			  <li class="active hide"><a href="#/photolist">首页</a></li>
+			</ul>
+			
+			<a id="user-login" href="#/login" class="btn pull-right"><i class="icon-user"></i> 登录</a>
+			<div id="create-topic" class="btn-group pull-right hide">
+				<button class="btn btn-info" onclick="location='/#/post'">
+					创建照片主题
+				</button>
+				<button class="btn btn-info dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+				  <ul class="dropdown-menu">
+					<li><a href="#/setting/website">网站设置</a></li>
+					<li><a href="#/setting/category">主题分类设置</a></li>
+					<li class="divider"></li>
+					
+					<li><a href="#/center/profile">个人信息</a></li>
+					<li><a href="#/center/password">修改密码</a></li>
+					<li><a href="#/center/questions">安全问题</a></li>
+					
+					<li class="divider"></li>
+					<li><a href="#/logout" id="user-logout">退出</a></li>
+				  </ul>
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
+
+<div id="player" class="hide">
+	<div id="player-overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="span1"></div>
+			<div class="span10">
+				<div id="player-photo" class="photo">
+					<div id="player-desc"></div>
+					<div id="player-shooting-time"></div>
+				</div>
+			</div>
+			<div class="span1"></div>
+		</div>
+	</div>
+	<a id="player-prev" name="prev" class=""></a>
+	<a id="player-next" name="next" class=""></a>
+	<a id="player-close"></a>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="span12">
+			<ul id="breadcrumb" class="breadcrumb"></ul>
+		</div>
+	</div>
+</div>
+<div class="container" id="container">
+	<div class="row" id="row-loading">
+		<div class="span12">
+			<p id="loading">加载数据...</p>
+		</div>
+	</div>
+</div>
+
+<footer class="footer"></footer>
+
+<script>_Timestamp.log('beginScript');</script>
+<script src="dist/seajs/2.2.0/seajs.js" id="seajsnode"></script>
+<script src="assets/jquery/jquery-1.10.2.min.js"></script>
+<script>_Timestamp.log('endSeajs');</script>
+<script>
+~function (){
+// debug 状态含义参考： https://github.com/seajs/seajs/issues/227
+var config = {
+	debug: 1,
+//	base: 'http://'+location.hostname+(location.port==='80'? '': ':'+location.port)+'/dist',
+	alias: {
+		//	'jquery': 'assets/jquery/jquery-1.10.2.min.js',
+		'plupload': 'plupload/1.5.6/plupload',
+		'template': 'arttemplate/2.0.1/arttemplate',
+		'bootstrap': 'bootstrap/2.3.2/bootstrap',
+		'md5': 'md5/1.0.0/md5',
+		'validator': 'validator/1.2.0/validator',
+		'hioogo': 'hioogo/0.1.0/hioogo'
+	},
+	preload: [
+
+	],
+	map: [
+		
+	]
+}
+
+if (config.debug || /(\?|&)debug/i.test(location.href)) {
+	config.map = config.map || []
+	config.map.push(function(uri) {
+		if (!/-debug\.(js|css)/i.test(uri)) {
+			uri = uri.replace(/\.(js|css)/, "-debug.$1")
+		}
+		return uri
+	})
+}
+
+seajs.config(config)
+seajs.use('hioogo')
+
+/*
+	目前 debug 有三个值：
+
+	0  --  普通状态
+	1  --  调试状态
+	2  --  无缓存状态
+	
+	debug 为 0 时具有的特征是：
+	只会输出 console.warn 等类型的信息。
+	
+	debug 为 1 时具有的特征是：
+	所有 log 信息都会输出。debug 为 0 时只会输出 console.warn 等类型的信息，不会输出 console.log 信息。
+	自动解 combo. debug 为 1 时，plugin-combo 自动失效。
+	不会删除插入的 script/link 节点。debug 为 0 时会删除。
+	
+	debug 为 2 时具有的特征是：
+	具有 1 的所有特征。
+	同时对所有请求加上时间戳，无缓存状态。
+*/
+}()
+</script>
+
+<!--[if IE 6]>
+	<script src="assets/ie6/ie6.min.js"></script>
+<![endif]-->
+<script>_Timestamp.log('endBody');</script>
+
+<div class="modal fade hide" id="dialog">
+  <div class="modal-header">
+	<a class="close" data-dismiss="modal">×</a>
+	<h3>提示</h3>
+  </div>
+  <div class="modal-body"></div>
+  <div class="modal-footer">
+	<a class="btn" data-dismiss="modal">关闭</a>
+	<a class="btn btn-primary" name="onok"> 确 定 </a>
+  </div>
+</div>
+</body>
+</html>
